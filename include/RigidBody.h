@@ -1,5 +1,5 @@
-#ifndef REGID_BODY_H
-#define REGID_BODY_H
+#ifndef RIGID_BODY_H
+#define RIGID_BODY_H
 
 #include "vec2.h"
 
@@ -7,7 +7,7 @@ using namespace PB_Math;
 
 
 namespace PB_Physics {
-	class RegidBody {
+	class RigidBody {
 	public:
 
 		Vec2 position = Vec2(0,0);
@@ -26,4 +26,4 @@ namespace PB_Physics {
 
 
 
-#endif // REGID_BODY_H
+#endif // RIGID_BODY_H

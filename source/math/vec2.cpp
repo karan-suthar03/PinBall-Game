@@ -11,7 +11,6 @@ Vec2 Vec2::operator*(float scalar) const {
 	return Vec2(x * scalar, y * scalar);
 }
 
-
 Vec2 Vec2::operator/(float scalar) const {
 	return Vec2(x / scalar, y / scalar);
 }

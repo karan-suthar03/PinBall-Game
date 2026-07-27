@@ -9,8 +9,8 @@ add_subdirectory(libs/raylib)
 
 add_executable(Pinball 
 "source/main.cpp"
-"source/physics/RegidBody.cpp"    
-"source/math/vec2.cpp"  "include/Ball.h" "source/Ball.cpp")
+"source/physics/RigidBody.cpp"    
+"source/math/vec2.cpp" "source/Ball.cpp" "source/physics/PhysicsWord.cpp")
 
 target_include_directories(Pinball PRIVATE
     ${PROJECT_SOURCE_DIR}/include
