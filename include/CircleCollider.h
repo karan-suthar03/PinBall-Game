@@ -14,6 +14,10 @@ namespace PB_Physics {
 		float getBottom(const Vec2& position) const {
 			return position.y + radius;
 		}
+
+		ColliderType getType() const override {
+			return ColliderType::CIRCLE;
+		}
 	};
 }
 

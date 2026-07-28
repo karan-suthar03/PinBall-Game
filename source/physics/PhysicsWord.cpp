@@ -1,6 +1,7 @@
 #include "PhysicsWorld.h"
 #include <iostream>
 #include <CircleCollider.h>
+#include "CollisionDetector.h"
 
 using namespace PB_Physics;
 
@@ -11,40 +12,22 @@ void PhysicsWorld::Update(float dt) {
 	for (RigidBody* body : bodies) {
 		body->Integrate(dt);
 	}
+	int steps = 5;
 
-	detectCollisions();
-
-	solveCollisions();
-
-	this->floorCollision();
+	while(steps > 0) {
+		this->detectCollisions();
+		this->solveCollisions();
+		this->floorCollision();
+		steps--;
+	}
 }
 
 void PhysicsWorld::detectCollisions() {
 	for (size_t i = 0; i < bodies.size(); ++i) {
 		for (size_t j = i + 1; j < bodies.size(); ++j) {
-			RigidBody* a = bodies[i];
-			RigidBody* b = bodies[j];
+			Collision collision;
 
-			CircleCollider* ca =
-				static_cast<CircleCollider*>(a->collider);
-
-			CircleCollider* cb =
-				static_cast<CircleCollider*>(b->collider);
-
-			Vec2 delta = b->position - a->position;
-
-			float distance = delta.length();
-
-			if(distance < (ca->radius + cb->radius)) {
-				Collision collision;
-
-				collision.bodyA = a;
-				collision.bodyB = b;
-
-				collision.normal = delta.normalize();
-
-				collision.penetration = (ca->radius + cb->radius) - distance;
-
+			if (CollisionDetector::checkCollision(bodies[i], bodies[j], collision)) {
 				collisions.push_back(collision);
 			}
 		}

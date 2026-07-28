@@ -9,6 +9,10 @@
 using namespace PB_Math;
 namespace PB_Physics {
 
+	enum class ColliderType {
+		CIRCLE
+	};
+
 	class RigidBody;
 
 	struct Collision {
@@ -18,12 +22,20 @@ namespace PB_Physics {
 
 		Vec2 normal;
 		float penetration;
+
+		Collision()
+			: bodyA(nullptr), bodyB(nullptr), normal(0.0f, 0.0f), penetration(0.0f)
+		{}
 	};
+
+
 	class Collider {
 	public:
 		virtual ~Collider() = default;
 
 		virtual float getBottom(const Vec2& position) const = 0;
+
+		virtual ColliderType getType() const = 0;
 	};
 }
 
