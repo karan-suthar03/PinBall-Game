@@ -11,6 +11,10 @@ namespace PB_Physics {
 	public:
 		void Update(float dt);
 
+		void detectCollisions();
+
+		void solveCollisions();
+
 		void floorCollision();
 
 		void applyGravityToBodies();
@@ -21,6 +25,9 @@ namespace PB_Physics {
 
 	private:
 		std::vector<RigidBody*> bodies;
+		std::vector<Collision> collisions;
+
+		const Vec2 gravity = Vec2(0, 980);
 	};
 }
 

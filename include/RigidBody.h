@@ -2,6 +2,7 @@
 #define RIGID_BODY_H
 
 #include "vec2.h"
+#include "Collider.h"
 
 using namespace PB_Math;
 
@@ -19,6 +20,8 @@ namespace PB_Physics {
 		void AddForce(Vec2& f);
 
 		void Integrate(float dt);
+
+		Collider* collider = nullptr;
 
 	};
 }
