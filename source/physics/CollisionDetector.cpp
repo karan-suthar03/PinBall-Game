@@ -24,7 +24,9 @@ bool CollisionDetector::checkCircleCircleCollision(RigidBody* a, RigidBody* b, C
 	
 	float distanceSqared = delta.getDistanceSquared();
 
-	if (distanceSqared < (ca->radius + cb->radius) * (ca->radius + cb->radius)) {
+	float temp = ca->radius + cb->radius;
+
+	if (distanceSqared < temp*temp) {
 
 		collision.bodyA = a;
 		collision.bodyB = b;
