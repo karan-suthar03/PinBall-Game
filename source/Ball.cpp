@@ -1,7 +1,5 @@
-#include "Ball.h"
+#include "game/Ball.h"
+#include <cmath>
+#include <raylib.h>
 
 using namespace PB_Physics;
-
-void Ball::draw() const {
-	DrawCircle(static_cast<int>(body.position.x), static_cast<int>(body.position.y), radius, RED);
-}

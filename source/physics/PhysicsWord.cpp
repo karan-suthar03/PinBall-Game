@@ -1,7 +1,5 @@
-#include "PhysicsWorld.h"
-#include <iostream>
-#include <CircleCollider.h>
-#include "CollisionDetector.h"
+#include "physics/PhysicsWorld.h"
+#include "physics/CollisionDetector.h"
 
 using namespace PB_Physics;
 
@@ -12,7 +10,7 @@ void PhysicsWorld::Update(float dt) {
 	for (RigidBody* body : bodies) {
 		body->Integrate(dt);
 	}
-	int steps = 5;
+	int steps = 8;
 
 	while(steps > 0) {
 		this->detectCollisions();
@@ -73,7 +71,9 @@ void PhysicsWorld::floorCollision() {
 			float penetration = bottom - floorY;
 
 			body->position.y -= penetration;
-			body->velocity.y *= -1.0f;
+
+			body->velocity.x *= 0.99f;
+			body->velocity.y *= -0.99f;
 		}
 	}
 }

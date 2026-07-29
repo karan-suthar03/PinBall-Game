@@ -1,5 +1,5 @@
-#include "CollisionDetector.h"
-#include "CircleCollider.h"
+#include "physics/CollisionDetector.h"
+#include "physics/CircleCollider.h"
 
 using namespace PB_Physics;
 
@@ -21,16 +21,17 @@ bool CollisionDetector::checkCircleCircleCollision(RigidBody* a, RigidBody* b, C
 		static_cast<CircleCollider*>(b->collider);
 
 	Vec2 delta = b->position - a->position;
+	
+	float distanceSqared = delta.getDistanceSquared();
 
-	float distance = delta.length();
-
-	if (distance < (ca->radius + cb->radius)) {
+	if (distanceSqared < (ca->radius + cb->radius) * (ca->radius + cb->radius)) {
 
 		collision.bodyA = a;
 		collision.bodyB = b;
 
 		collision.normal = delta.normalize();
 
+		float distance = delta.length();
 		collision.penetration = (ca->radius + cb->radius) - distance;
 
 		return true;

@@ -1,7 +1,7 @@
 #ifndef COLLIDER_H
 #define COLLIDER_H
 
-#include "vec2.h"
+#include "math/vec2.h"
 #include "RigidBody.h"
 
 
@@ -10,7 +10,8 @@ using namespace PB_Math;
 namespace PB_Physics {
 
 	enum class ColliderType {
-		CIRCLE
+		CIRCLE,
+		BOX
 	};
 
 	class RigidBody;
