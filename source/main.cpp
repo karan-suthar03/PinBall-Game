@@ -21,8 +21,9 @@ void addBallAtPosition(std::vector<Entity*>& entities, PhysicsWorld& physicsWorl
 }
 
 void addBoxAtPositon(std::vector<Entity*>& entities, PhysicsWorld& physicsWorld, const Vec2& position) {
-	float width = 100.0f;
-	float height = 50.0f;
+
+	float width = 20.0f;
+	float height = 20.0f;
 	Box* newBox = new Box(width, height);
 	newBox->rigidBody.position = position;
 	newBox->rigidBody.mass = width * height;
@@ -45,13 +46,13 @@ int main(){
  //       addBallAtPosition(balls, physicsWorld, Vec2(GetRandomValue(0, 800), GetRandomValue(0, 600)));
 	//}
 
-	addBoxAtPositon(entities, physicsWorld, Vec2(400, 300));
+	//addBoxAtPositon(entities, physicsWorld, Vec2(400, 300));
 
 	SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
-        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-			addBallAtPosition(entities, physicsWorld, Vec2(GetMouseX(), GetMouseY()));
+        if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+			addBoxAtPositon(entities, physicsWorld, Vec2(GetMouseX(), GetMouseY()));
 		}
 
         physicsWorld.Update(1.0f / 60.0f);
@@ -66,7 +67,7 @@ int main(){
 					((static_cast<Ball*>(entity))->circleDrawable).drawCircle(body->position.x, body->position.y, static_cast<Ball*>(entity)->radius);
                 } else if (entity->drawable->getType() == PB_Graphics::DrawableType::BOX) {
 					RigidBody* body = entity->body;
-                    ((static_cast<Box*>(entity))->boxDrawable).drawBox(body->position.x, body->position.y, static_cast<Box*>(entity)->width, static_cast<Box*>(entity)->height, body->rotation);
+                    ((static_cast<Box*>(entity))->boxDrawable).drawBox(body->position.x + static_cast<Box*>(entity)->width, body->position.y + static_cast<Box*>(entity)->height, static_cast<Box*>(entity)->width, static_cast<Box*>(entity)->height, body->rotation);
                 }
             }
         }
