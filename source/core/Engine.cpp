@@ -4,6 +4,7 @@
 #include <game/Ball.h>
 #include <raylib.h>
 #include <vector>
+#include <core/Utils.h>
 
 void Engine::update(float dt) {
 	physicsWorld.Update(dt);
@@ -34,14 +35,12 @@ void Engine::render() {
 
 	for (auto& entity : entities) {
 		if (entity->drawable) {
-			if (entity->drawable->getType() == PB_Graphics::DrawableType::BALL) {
-				PB_Physics::RigidBody* body = entity->body;
-				((static_cast<Ball*>(entity))->circleDrawable).drawCircle(body->position.x, body->position.y, static_cast<Ball*>(entity)->radius);
-			}
-			else if (entity->drawable->getType() == PB_Graphics::DrawableType::BOX) {
-				PB_Physics::RigidBody* body = entity->body;
-				((static_cast<Box*>(entity))->boxDrawable).drawBox(body->position.x + static_cast<Box*>(entity)->width, body->position.y + static_cast<Box*>(entity)->height, static_cast<Box*>(entity)->width, static_cast<Box*>(entity)->height, body->rotation);
-			}
+
+			PB_Utils::Transform transfrom;
+			transfrom.position = entity->body->position;
+			transfrom.rotation = entity->body->rotation;
+
+			entity->drawable->draw(&transfrom);
 		}
 	}
 }

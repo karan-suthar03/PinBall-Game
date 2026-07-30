@@ -9,7 +9,7 @@
 class Ball : public Entity {
 public:
 
-	Ball(float radius) : radius(radius), circleCollider(radius) {
+	Ball(float radius) : radius(radius), circleCollider(radius), circleDrawable(radius) {
 		rigidBody.collider = &circleCollider;
 
 		collider = &circleCollider;

@@ -2,15 +2,17 @@
 #define CIRCLE_RENDERER_H
 
 #include "Drawable.h"
-#include <raylib.h>
+#include <core/Utils.h>
 namespace PB_Graphics {
 	class CircleDrawable : public Drawable {
-	public:
-		CircleDrawable() : Drawable(DrawableType::BALL) {
-		}
-		void drawCircle(float x, float y, float radius);
-
 	private:
+		float radius;
+	public:
+		CircleDrawable(float radius) : Drawable(DrawableType::BALL), radius(radius) {
+		}
+
+		void draw(PB_Utils::Transform* transoform) const;
+
 	};
 }
 

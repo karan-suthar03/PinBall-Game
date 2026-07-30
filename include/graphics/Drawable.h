@@ -1,7 +1,10 @@
 #ifndef DRAWABLE_H
 #define DRAWABLE_H
 
+#include <core/Utils.h>
+
 namespace PB_Graphics {
+
 
 	enum class DrawableType {
 		NONE,
@@ -15,6 +18,8 @@ namespace PB_Graphics {
 		Drawable(DrawableType type) : type(type) {};
 
 		virtual ~Drawable() = default;
+
+		virtual void draw(PB_Utils::Transform* transform) const = 0;
 
 		DrawableType getType() const {
 			return type;

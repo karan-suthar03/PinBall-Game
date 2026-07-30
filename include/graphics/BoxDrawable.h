@@ -2,14 +2,18 @@
 #define BOX_DRAWABLE_H
 
 #include "Drawable.h"
+#include <core/Utils.h>
 
 namespace PB_Graphics {
 	class BoxDrawable : public Drawable {
-	public:
-		BoxDrawable() : Drawable(DrawableType::BOX) {
-		}
-		void drawBox(float x, float y, float width, float height, float rotation);
 	private:
+		float width;
+		float height;
+	public:
+		BoxDrawable(float width, float height) : Drawable(DrawableType::BOX), width(width), height(height) {
+		}
+		void draw(PB_Utils::Transform* transoform) const;
+
 	};
 }
 

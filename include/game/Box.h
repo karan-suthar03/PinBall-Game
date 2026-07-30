@@ -8,7 +8,7 @@
 
 class Box : public Entity {
 public:
-	Box(float width, float height) : width(width), height(height), boxCollider(width, height) {
+	Box(float width, float height) : width(width), height(height), boxCollider(width, height), boxDrawable(width, height) {
 		rigidBody.collider = &boxCollider;
 
 		collider = &boxCollider;

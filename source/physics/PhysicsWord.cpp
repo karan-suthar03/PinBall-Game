@@ -1,5 +1,8 @@
 #include "physics/PhysicsWorld.h"
 #include "physics/CollisionDetector.h"
+#include <physics/RigidBody.h>
+#include <physics/Collider.h>
+#include <math/vec2.h>
 
 using namespace PB_Physics;
 
@@ -33,10 +36,13 @@ void PhysicsWorld::detectCollisions() {
 }
 
 void PhysicsWorld::solveCollisions() {
-	for (Collision& collision : collisions) {
+
+	for (int i = 0; i < collisions.size(); i++) {
+		Collision collision = collisions[i];
 		RigidBody* a = collision.bodyA;
 		RigidBody* b = collision.bodyB;
 
+		b->position.x += 1e-4f;
 		Vec2 correction = collision.normal * (collision.penetration / 2.0f);
 
 		a->position = a->position - correction;
@@ -46,7 +52,7 @@ void PhysicsWorld::solveCollisions() {
 
 		float velocityAlongNormal = relativeVelocity.dot(collision.normal);
 
-		if(velocityAlongNormal > 0)
+		if (velocityAlongNormal > 0)
 			continue;
 
 		float j = -1.0f * velocityAlongNormal;
@@ -58,6 +64,7 @@ void PhysicsWorld::solveCollisions() {
 		a->velocity = a->velocity - (impulse / a->mass);
 		b->velocity = b->velocity + (impulse / b->mass);
 	}
+
 	collisions.clear();
 }
 
