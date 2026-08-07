@@ -10,22 +10,25 @@ void PB_Physics::RigidBody::AddForce(Vec2& f) {
 }
 
 void PB_Physics::RigidBody::Integrate(float dt) {
-	Vec2 acc = acceleration / mass;
+    Vec2 acc = acceleration / mass;
 
 	velocity = velocity + acc * dt;
 	position = position + velocity * dt;
 
-	acceleration = Vec2(0, 0);
+    acceleration = Vec2(0, 0);
 
-	float angularAcc = angularAcceleration / mass;
+    float angularAcc = angularAcceleration / inertia;
 
 	angularVelocity = angularVelocity + angularAcc * dt;
 
 	rotation = rotation + angularVelocity * dt;
 
-	angularAcceleration = 0;
+    angularAcceleration = 0;
 
-	rotation = fmod(rotation, 2 * PI);
+	angularVelocity *= 0.98f;
+	velocity = velocity * 0.98f;
+
+    rotation = fmod(rotation, 2 * PI);
 }
 
 void PB_Physics::RigidBody::addTorque(float torque) {

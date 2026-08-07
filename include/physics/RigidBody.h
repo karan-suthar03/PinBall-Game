@@ -16,6 +16,8 @@ namespace PB_Physics {
 		Vec2 acceleration = Vec2(0,0);
 		Vec2 velocity = Vec2(0,0);
 
+		bool staticBody = false;
+
 
 		float rotation = 0;
 		float angularVelocity = 0;
@@ -23,6 +25,8 @@ namespace PB_Physics {
 
 
 		float mass = 1.0f;
+
+		float inertia = 1.0f;
 
 		void AddForce(Vec2& f);
 

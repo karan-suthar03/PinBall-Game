@@ -3,6 +3,7 @@
 #include <physics/RigidBody.h>
 #include <physics/Collider.h>
 #include <math/vec2.h>
+#include "physics/CollisionSolver.h"
 
 using namespace PB_Physics;
 
@@ -10,61 +11,29 @@ void PhysicsWorld::Update(float dt) {
 
 	this->applyGravityToBodies();
 
-	for (RigidBody* body : bodies) {
-		body->Integrate(dt);
-	}
+
 	int steps = 8;
 
 	while(steps > 0) {
 		this->detectCollisions();
 		this->solveCollisions();
-		this->floorCollision();
+		//this->floorCollision();
 		steps--;
+	}
+
+	for (RigidBody* body : bodies) {
+		body->Integrate(dt);
 	}
 }
 
 void PhysicsWorld::detectCollisions() {
-	for (size_t i = 0; i < bodies.size(); ++i) {
-		for (size_t j = i + 1; j < bodies.size(); ++j) {
-			Collision collision;
 
-			if (CollisionDetector::checkCollision(bodies[i], bodies[j], collision)) {
-				collisions.push_back(collision);
-			}
-		}
-	}
+	CollisionDetector::detectCollisions(bodies, collisions);
+
 }
 
 void PhysicsWorld::solveCollisions() {
-
-	for (int i = 0; i < collisions.size(); i++) {
-		Collision collision = collisions[i];
-		RigidBody* a = collision.bodyA;
-		RigidBody* b = collision.bodyB;
-
-		b->position.x += 1e-4f;
-		Vec2 correction = collision.normal * (collision.penetration / 2.0f);
-
-		a->position = a->position - correction;
-		b->position = b->position + correction;
-
-		Vec2 relativeVelocity = b->velocity - a->velocity;
-
-		float velocityAlongNormal = relativeVelocity.dot(collision.normal);
-
-		if (velocityAlongNormal > 0)
-			continue;
-
-		float j = -1.0f * velocityAlongNormal;
-
-		j /= (1 / a->mass) + (1 / b->mass);
-
-		Vec2 impulse = collision.normal * j;
-
-		a->velocity = a->velocity - (impulse / a->mass);
-		b->velocity = b->velocity + (impulse / b->mass);
-	}
-
+	CollisionSolver::solveCollisions(collisions);
 	collisions.clear();
 }
 
@@ -87,6 +56,7 @@ void PhysicsWorld::floorCollision() {
 
 void PhysicsWorld::applyGravityToBodies() {
 	for (RigidBody* body : bodies) {
+		if (body->staticBody) continue;
 		Vec2 force = gravity * body->mass;
 		body->AddForce(force);
 	}

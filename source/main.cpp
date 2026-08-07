@@ -13,8 +13,7 @@ int main(){
 
 	::SetTargetFPS(60);
 
-    //for (int i = 0; i < 1; i++)
-    //{
+    //for (int i = 0; i < 400; ++i) {
     //    engine.addBoxAtPosition(Vec2(GetRandomValue(1, 600), GetRandomValue(1, 400)));
     //}
 

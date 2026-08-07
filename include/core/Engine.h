@@ -8,11 +8,14 @@
 
 class Engine {
 private:
+
+public:
 	std::vector<Entity*> entities;
 
 	PB_Physics::PhysicsWorld physicsWorld;
 
-public: 
+	Engine();
+
 	void update(float dt);
 
 	void render();

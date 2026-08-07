@@ -11,7 +11,15 @@ namespace PB_Physics {
 
 	enum class ColliderType {
 		CIRCLE,
-		BOX
+		BOX,
+		COUNT
+	};
+
+	enum class CollisionType {
+		CIRCLE_CIRCLE,
+		CIRCLE_BOX,
+		BOX_BOX,
+		COUNT
 	};
 
 	class RigidBody;
@@ -24,8 +32,12 @@ namespace PB_Physics {
 		Vec2 normal;
 		float penetration;
 
+		CollisionType type;
+
+		Vec2 contactPoint;
+
 		Collision()
-			: bodyA(nullptr), bodyB(nullptr), normal(0.0f, 0.0f), penetration(0.0f)
+			: bodyA(nullptr), bodyB(nullptr), normal(0.0f, 0.0f), penetration(0.0f), type(CollisionType::COUNT), contactPoint(0.0f, 0.0f)
 		{}
 	};
 
